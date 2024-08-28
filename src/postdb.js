@@ -8,8 +8,9 @@ async function main() {
     { useNewUrlParser: true }
   );
   // mongoose.connect("mongodb://127.0.0.1:27017/myblog") for local DB
+  console.log("post connected");
 }
-main();
+main()
 const postSchema = new mongoose.Schema({
     author: String,
     title: String,
@@ -19,6 +20,7 @@ const postSchema = new mongoose.Schema({
     like:Number,
     likedby:[String]
     });
+  
     
 
 const PosT = mongoose.model("post", postSchema);

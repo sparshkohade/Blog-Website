@@ -43,24 +43,24 @@ const visitSchema = new mongoose.Schema({
 
 const visits = mongoose.model("visits", visitSchema);
 
-app.get("/home", (req, res) => {
-  
+app.get("/home", async (req, res) => {
   if (req.session.useremail) {
-    PosT.find((err, results) => {
-      req.session.result = results;
-    });
+    try {
+      const posts = await PosT.find().exec();
+      const sortedPosts = await PosT.find().sort({ like: "desc" }).exec();
 
-    PosT.find((err, result) => {
-      // console.log(req.session.sortedresult);
       res.render("home", {
         user: req.session.username,
-        posts: req.session.result,
+        posts: posts,
         date: Date.now(),
-        sposts: result,
+        sposts: sortedPosts,
       });
-    }).sort({ like: "desc" });
+    } catch (err) {
+      console.log(err);
+      res.render("error", { error: "Error fetching posts" });
+    }
   } else {
-    res.redirect("/")
+    res.redirect("/");
   }
 });
 app.get("/", (req, res) => {
@@ -105,7 +105,7 @@ app.post("/signup", async (req, res) => {
   await Profile.insertMany(profileData)
   req.session.useremail = req.body.email;
   req.session.username = req.body.name;
-  res.redirect("/home");
+  res.redirect("home");
 }else{
   res.send("<script>alert('user already exits');window.location.href = '/'</script>");
 
