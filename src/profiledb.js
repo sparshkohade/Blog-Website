@@ -4,7 +4,7 @@ async function main() {
   //   useNewUrlParser: true,
   // });
   await mongoose.connect(
-    "mongodb+srv://arjuncvinod:gdozFKJP7i12I87s@cluster0.yjxy0xp.mongodb.net/todoListDB",
+    "mongodb+srv://sparshkohade588:05191401@blogwebsite.xvyfd.mongodb.net/",
     { useNewUrlParser: true }
     
   );
